@@ -3,11 +3,6 @@
         <div id="wrapper">
             <?php
             /**
-             * Cette page est TRES similaire à wall.php. 
-             * Vous avez sensiblement à y faire la meme chose.
-             * Il y a un seul point qui change c'est la requete sql.
-             */
-            /**
              * Etape 1: Le mur concerne un utilisateur en particulier
              */
             $userId = intval($_GET['user_id']);
@@ -27,7 +22,6 @@
                 $laQuestionEnSql = "SELECT * FROM `users` WHERE id= '$userId' ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $user = $lesInformations->fetch_assoc();
-                //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
                 // echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
@@ -50,7 +44,7 @@
                     posts.created,
                     users.id as user_id,
                     users.alias as author_name,  
-                    count(likes.id) as like_number,  
+                    count(DISTINCT likes.id) as like_number,  
                     GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                     FROM followers 
                     JOIN users ON users.id=followers.followed_user_id
