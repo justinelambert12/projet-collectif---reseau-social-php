@@ -3,6 +3,24 @@ session_start();
 if (isset($_SESSION['connected_id'])) {
     $connectedId = $_SESSION['connected_id'];
 }
+    $queryURL = ($_SERVER['QUERY_STRING']!=="") ? ("?".$_SERVER['QUERY_STRING']) : "";
+    $pageURL = $_SERVER['PHP_SELF'] . $queryURL;
+
+    //Réception du formulaire et gestion de l'ajout ou suppression de like
+    $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+    if (isset($_POST['like'])) {
+        $postId = $_POST['postId'];
+        if ($_POST['like']==="OK") { //Ajout d'un like
+            $likeSQL = "INSERT INTO likes (id, user_id, post_id) VALUES (NULL, $connectedId, $postId);";
+        } else { //Suppression d'un like ($_POST['like']="NOK")
+            $likeSQL = "DELETE FROM likes WHERE user_id=$connectedId AND post_id=$postId;";
+        }
+        //Exécution de la requête
+        $ok = $mysqli->query($likeSQL);
+        if(!$ok) {
+            echo "Impossible de liker ou unliker : " . $mysqli->error;
+        }
+    }
 ?>
 <!doctype html>
 <html lang="fr">
