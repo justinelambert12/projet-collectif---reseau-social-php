@@ -3,6 +3,8 @@ if (isset($_SESSION['connected_id'])) {
     //Définition des variables utiles
     $connectedId = $_SESSION['connected_id'];
     $postId = $post['id'];
+    $queryURL = ($_SERVER['QUERY_STRING']!=="") ? ("?".$_SERVER['QUERY_STRING']) : "";
+    $pageURL = $_SERVER['PHP_SELF'] . $queryURL;
 
     //Gestion de l'ajout ou suppression de like en fonction du formulaire envoyé
     if (isset($_POST['like'])) {
@@ -15,13 +17,13 @@ if (isset($_SESSION['connected_id'])) {
         $ok = $mysqli->query($likeSQL);
         if(!$ok) {
             echo "Impossible d'effectuer l'abonnement/désabonnement: " . $mysqli->error;
+        } else {//si la requête est validée, je recharge la page pour que le nombre de likes se mette à jour
+            header("Location: $pageURL");
         }
     }
 
     //Formulaire pour ajouter un like avec l'utilisateur connecté sous un post qui n'est pas le sien
     if ($post['user_id']!=$_SESSION['connected_id']) {
-        $queryURL = ($_SERVER['QUERY_STRING']!=="") ? ("?".$_SERVER['QUERY_STRING']) : "";
-        $pageURL = $_SERVER['PHP_SELF'] . $queryURL;
 
         $alreadyLikedSQL = "SELECT * FROM likes WHERE user_id=$connectedId AND post_id=$postId";
         $alreadyLikedInfo = $mysqli -> query($alreadyLikedSQL);
