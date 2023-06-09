@@ -12,7 +12,8 @@
         <p><?php echo $post['content'] ?></p>
     </div>
     <footer>
-        <small>♥ <?php echo $post['like_number'] ?></small>                           
+        <small>♥ <?php echo $post['like_number']; 
+        include "like.php"; ?></small>                           
         <?php $tags = explode(',', $post['taglist']);
         foreach ($tags as $tag): ?>
         <a href="">#<?php echo $tag; ?></a>,      

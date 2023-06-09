@@ -42,6 +42,7 @@
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
+                    posts.id,
                     users.id as user_id,
                     users.alias as author_name,  
                     count(DISTINCT likes.id) as like_number,  
