@@ -49,8 +49,9 @@ if (isset($_SESSION['connected_id']) && $_SESSION['connected_id']!=="" && $_SESS
     <?php } else { // Pour s'abonner ?>
             <input type='hidden' name='follow' value='OK'>
             <input type='submit' value="S'abonner">
+    <?php }; ?>
         </form> 
-<?php }
-    } 
-endif; 
+<?php 
+    };
+endif;
 ?>

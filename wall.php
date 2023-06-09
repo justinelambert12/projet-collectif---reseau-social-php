@@ -29,7 +29,7 @@
             ?>
 
             <?php 
-        if (isset($_POST['user_id'])){
+        if (isset($_POST['message'])){
         $authorId = $_POST['user_id'];
         $postContent = $_POST['message'];
 
@@ -111,7 +111,7 @@
                 <?php if( isset($_SESSION['connected_id']) && $userId == $_SESSION['connected_id']) {?>  
                     <form method="post" action="wall.php">
                     <textarea name="message" placeholder="Entrez votre message" cols="80" rows="5"></textarea>
-                    <input type='hidden'name= 'user_id' value=<?php echo $userId ?>>
+                    <input type='hidden' name='user_id' value=<?php echo $userId ?>>
                     <input type="submit" value="Envoyer" />
                 </form>
                 <?php } ?>
